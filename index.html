@@ -1,712 +1,950 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>全世界无产者联合起来❗</title>
-  <style>
-    :root {
-      --red: #b51616;
-      --red-dark: #781010;
-      --yellow: #ffd43b;
-      --yellow-light: #fff4bd;
-      --ink: #352b1a;
-      --paper: #fffaf0;
-      --line: #e0bd55;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 15% 10%, rgba(255, 212, 59, .16), transparent 24rem),
-        var(--paper);
-      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-      line-height: 1.7;
-    }
-
-    header {
-      position: relative;
-      overflow: hidden;
-      min-height: 330px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 70px 20px;
-      color: white;
-      background: linear-gradient(135deg, var(--red-dark), var(--red) 55%, #df7a18);
-    }
-
-    header::before,
-    header::after {
-      content: "";
-      position: absolute;
-      width: 280px;
-      height: 280px;
-      border: 32px solid rgba(255, 212, 59, .12);
-      border-radius: 50%;
-    }
-
-    header::before { left: -130px; top: -140px; }
-    header::after { right: -130px; bottom: -140px; }
-
-    header > div { position: relative; z-index: 1; }
-
-    h1 {
-      margin: 0 0 12px;
-      color: var(--yellow);
-      font-size: clamp(36px, 7vw, 72px);
-      text-shadow: 0 3px 0 rgba(120, 16, 16, .35);
-    }
-
-    header p {
-      max-width: 760px;
-      margin: auto;
-      font-size: clamp(16px, 2vw, 20px);
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 12px;
-      background: rgba(255, 250, 240, .96);
-      border-bottom: 2px solid var(--yellow);
-      backdrop-filter: blur(10px);
-    }
-
-    button {
-      border: 1px solid #d8b43e;
-      border-radius: 999px;
-      padding: 9px 14px;
-      background: white;
-      color: var(--red-dark);
-      cursor: pointer;
-      font: inherit;
-      font-weight: 700;
-      transition: .2s ease;
-    }
-
-    button:hover,
-    button.active {
-      transform: translateY(-2px);
-      background: var(--red);
-      border-color: var(--red);
-      color: var(--yellow);
-    }
-
-    main {
-      max-width: 1120px;
-      margin: auto;
-      padding: 36px 24px 70px;
-    }
-
-    section {
-      display: none;
-      scroll-margin-top: 90px;
-    }
-
-    section.active {
-      display: block;
-      animation: enter .35s ease;
-    }
-
-    @keyframes enter {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: none; }
-    }
-
-    h2 {
-      position: relative;
-      margin: 8px 0 24px;
-      color: var(--red);
-      font-size: clamp(28px, 4vw, 42px);
-    }
-
-    h2::after {
-      content: "";
-      display: block;
-      width: 90px;
-      height: 5px;
-      margin-top: 6px;
-      border-radius: 99px;
-      background: var(--yellow);
-    }
-
-    h3 { color: var(--red-dark); }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      position: relative;
-      overflow: hidden;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-top: 5px solid var(--red);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, .88);
-      box-shadow: 0 10px 28px rgba(145, 83, 13, .08);
-      transition: .25s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 16px 35px rgba(145, 83, 13, .14);
-    }
-
-    .card h3 { margin-top: 0; }
-
-    .quote {
-      padding: 20px;
-      border-left: 6px solid var(--red);
-      border-radius: 0 10px 10px 0;
-      background: var(--yellow-light);
-      font-size: 18px;
-    }
-
-    .timeline {
-      position: relative;
-      margin-left: 12px;
-      padding: 4px 0 4px 30px;
-      border-left: 4px solid var(--yellow);
-    }
-
-    .event {
-      position: relative;
-      margin: 0 0 18px;
-      padding: 14px 16px;
-      border: 1px solid #e7cf83;
-      border-radius: 10px;
-      background: white;
-      cursor: pointer;
-    }
-
-    .event::before {
-      content: "";
-      position: absolute;
-      left: -39px;
-      top: 20px;
-      width: 14px;
-      height: 14px;
-      border: 4px solid var(--paper);
-      border-radius: 50%;
-      background: var(--red);
-    }
-
-    .event-detail {
-      display: none;
-      margin-top: 8px;
-      color: #6b5a3c;
-    }
-
-    .event.open .event-detail { display: block; }
-
-    .term {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 13px;
-      border: 1px solid #d7bd66;
-      border-radius: 999px;
-      background: white;
-      color: var(--red-dark);
-      cursor: pointer;
-    }
-
-    .term:hover,
-    .term.active {
-      background: var(--yellow);
-      border-color: var(--yellow);
-    }
-
-    #termExplain {
-      min-height: 110px;
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 10px;
-      background: var(--red-dark);
-      color: white;
-    }
-
-    label { font-weight: bold; }
-
-    select, input {
-      width: 100%;
-      max-width: 520px;
-      margin-top: 8px;
-      padding: 11px;
-      border: 2px solid #dcbf56;
-      border-radius: 8px;
-      background: white;
-      font: inherit;
-    }
-
-    .people-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    .person {
-      padding: 15px;
-      border-left: 5px solid var(--yellow);
-      background: white;
-    }
-
-    .person strong { color: var(--red); }
-
-    .filter-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0;
-    }
-
-    .source-note {
-      margin-top: 20px;
-      padding: 14px;
-      border: 2px dashed #d7ae2a;
-      border-radius: 10px;
-      background: #fffdf5;
-    }
-
-    a {
-      color: var(--red);
-      font-weight: bold;
-      text-decoration-thickness: 2px;
-    }
-
-    footer {
-      padding: 28px 20px;
-      text-align: center;
-      color: var(--yellow-light);
-      background: var(--red-dark);
-    }
-
-    @media (max-width: 650px) {
-      header { min-height: 280px; }
-      nav { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
-      nav button { flex: 0 0 auto; }
-      main { padding-inline: 16px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全世界无产者联合起来❗</title>
+<style>
+:root {
+  --red: #b51616;
+  --red-dark: #781010;
+  --yellow: #ffd43b;
+  --yellow-light: #fff4bd;
+  --ink: #352b1a;
+  --paper: #fffaf0;
+  --line: #e0bd55;
+  --bg-grad: radial-gradient(circle at 15% 10%, rgba(255, 212, 59, .16), transparent 24rem), var(--paper);
+}
+.dark {
+  --red: #d62020;
+  --red-dark: #911616;
+  --yellow: #ffe066;
+  --yellow-light: #3a3120;
+  --ink: #e9e2d5;
+  --paper: #1c1a17;
+  --line: #947838;
+  --bg-grad: radial-gradient(circle at 15% 10%, rgba(255, 212, 59, .08), transparent 24rem), #1c1a17;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg-grad);
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  line-height: 1.7;
+  transition: background .3s, color .3s;
+}
+#progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--yellow);
+  z-index: 9999;
+  width: 0%;
+}
+#particles {
+  position: fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+header {
+  position: relative;
+  overflow: hidden;
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 70px 20px;
+  color: white;
+  background: linear-gradient(135deg, var(--red-dark), var(--red) 55%, #df7a18);
+}
+header::before, header::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border: 32px solid rgba(255, 212, 59, .12);
+  border-radius: 50%;
+}
+header::before { left: -130px; top: -140px; }
+header::after { right: -130px; bottom: -140px; }
+header > div { position: relative; z-index: 1; }
+h1 {
+  margin: 0 0 12px;
+  color: var(--yellow);
+  font-size: clamp(36px, 7vw, 72px);
+  text-shadow: 0 3px 0 rgba(120, 16, 16, .35);
+}
+#quoteRotator {
+  max-width: 760px;
+  margin:10px auto 0;
+  font-size: clamp(16px, 2vw, 20px);
+  min-height: 44px;
+  opacity:0.95;
+}
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 250, 240, .96);
+  border-bottom: 2px solid var(--yellow);
+  backdrop-filter: blur(10px);
+  transition: background .3s;
+}
+.dark nav { background: rgba(28,26,23,0.94); }
+button {
+  border: 1px solid #d8b43e;
+  border-radius: 999px;
+  padding: 9px 14px;
+  background: white;
+  color: var(--red-dark);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: .2s ease;
+}
+.dark button { background:#2c2924; color:var(--yellow); }
+button:hover, button.active {
+  transform: translateY(-2px);
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--yellow);
+}
+#toolBar {
+  max-width:1120px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+#searchInput {
+  flex:1;
+  min-width:220px;
+  padding:9px 14px;
+  border-radius:999px;
+  border:2px solid var(--line);
+  background:var(--paper);
+  color:var(--ink);
+}
+main {
+  max-width: 1120px;
+  margin: auto;
+  padding: 36px 24px 70px;
+  position:relative;
+  z-index:1;
+}
+section {
+  display: none;
+  scroll-margin-top: 90px;
+}
+section.active {
+  display: block;
+  animation: enter .35s ease;
+}
+@keyframes enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+h2 {
+  position: relative;
+  margin: 8px 0 24px;
+  color: var(--red);
+  font-size: clamp(28px, 4vw, 42px);
+}
+h2::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 5px;
+  margin-top: 6px;
+  border-radius: 99px;
+  background: var(--yellow);
+}
+h3 { color: var(--red-dark); }
+.dark h3 { color:var(--yellow); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--red);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 10px 28px rgba(145, 83, 13, .08);
+  transition: .25s ease;
+}
+.dark .card { background:rgba(40,37,32,0.85); }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 35px rgba(145, 83, 13, .14);
+}
+.card .ripple {
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,212,59,0.25);
+  transform:scale(0);
+  animation:rippleAnim .6s linear;
+  pointer-events:none;
+}
+@keyframes rippleAnim {
+  to { transform:scale(2.5); opacity:0; }
+}
+.card h3 { margin-top: 0; }
+.quote {
+  padding: 20px;
+  border-left: 6px solid var(--red);
+  border-radius: 0 10px 10px 0;
+  background: var(--yellow-light);
+  font-size: 18px;
+}
+.timeline {
+  position: relative;
+  margin-left: 12px;
+  padding: 4px 0 4px 30px;
+  border-left: 4px solid var(--yellow);
+}
+.event {
+  position: relative;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid #e7cf83;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity .4s, transform .4s;
+}
+.dark .event { background:#2c2924; }
+.event.inview { opacity:1; transform:none; }
+.event::before {
+  content: "";
+  position: absolute;
+  left: -39px;
+  top: 20px;
+  width: 14px;
+  height: 14px;
+  border: 4px solid var(--paper);
+  border-radius: 50%;
+  background: var(--red);
+}
+.event-detail {
+  display: none;
+  margin-top: 8px;
+  color: #6b5a3c;
+}
+.dark .event-detail { color:#c9b896; }
+.event.open .event-detail { display: block; }
+.term {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 13px;
+  border: 1px solid #d7bd66;
+  border-radius: 999px;
+  background: white;
+  color: var(--red-dark);
+  cursor: pointer;
+}
+.dark .term { background:#2c2924; color:var(--yellow); }
+.term:hover, .term.active {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color:#222;
+}
+#termExplain {
+  min-height: 110px;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 10px;
+  background: var(--red-dark);
+  color: white;
+}
+label { font-weight: bold; }
+select, input {
+  width: 100%;
+  max-width: 520px;
+  margin-top: 8px;
+  padding: 11px;
+  border: 2px solid #dcbf56;
+  border-radius: 8px;
+  background: var(--paper);
+  color:var(--ink);
+  font: inherit;
+}
+.people-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.person {
+  padding: 15px;
+  border-left: 5px solid var(--yellow);
+  background: white;
+  position:relative;
+}
+.dark .person { background:#2c2924; }
+.person strong { color: var(--red); }
+.dark .person strong { color:var(--yellow); }
+.person .bookmark {
+  position:absolute;
+  top:8px;
+  right:8px;
+  cursor:pointer;
+  font-size:18px;
+  opacity:0.45;
+}
+.person .bookmark.saved { opacity:1; }
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+}
+.source-note {
+  margin-top: 20px;
+  padding: 14px;
+  border: 2px dashed #d7ae2a;
+  border-radius: 10px;
+  background: #fffdf5;
+}
+.dark .source-note { background:#2b2820; }
+a {
+  color: var(--red);
+  font-weight: bold;
+  text-decoration-thickness: 2px;
+}
+.dark a { color:var(--yellow); }
+footer {
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--yellow-light);
+  background: var(--red-dark);
+}
+#backTop {
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:var(--red);
+  color:var(--yellow);
+  border:none;
+  font-size:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+  z-index:30;
+}
+#backTop.show { opacity:1; pointer-events:auto; }
+#helpModal {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+#helpModal.show { display:flex; }
+.modal-box {
+  background:var(--paper);
+  color:var(--ink);
+  padding:24px;
+  border-radius:12px;
+  max-width:480px;
+  border:2px solid var(--yellow);
+}
+mark { background:rgba(255,212,59,0.55); color:#111; }
+.dark mark { background:rgba(255,212,59,0.7); color:#000; }
+@media (max-width: 650px) {
+  header { min-height: 280px; }
+  nav { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+  nav button { flex: 0 0 auto; }
+  main { padding-inline: 16px; }
+  #toolBar { padding:8px 16px; }
+}
+</style>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>全世界无产者联合起来❗</h1>
-      <p></p>
-    </div>
-  </header>
+<div id="progressBar"></div>
+<canvas id="particles"></canvas>
+<header>
+  <div>
+    <h1>全世界无产者联合起来❗</h1>
+    <div id="quoteRotator"></div>
+  </div>
+</header>
+<nav aria-label="章节导航">
+  <button class="active" data-tab="works">经典名作</button>
+  <button data-tab="timeline">时间线</button>
+  <button data-tab="people">重要人物</button>
+  <button data-tab="terms">概念卡片</button>
+  <button data-tab="compare">观点比较</button>
+  <button data-tab="sources">来源与参考</button>
+</nav>
+<div id="toolBar">
+  <input id="searchInput" placeholder="🔍 全文搜索（按S快速聚焦）">
+  <button id="themeBtn">🌓 主题切换</button>
+  <span id="statInfo" style="margin-left:auto; font-size:14px; opacity:0.8;"></span>
+</div>
+<main>
+<section id="works" class="active">
+  <h2>经典名作</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>《共产党宣言》</h3>
+      <p><strong>作者：</strong>马克思、恩格斯</p>
+      <p><strong>年份：</strong>1848</p>
+      <p>分析阶级斗争、资本主义社会、资产阶级与共产主义纲领。</p>
+    </article>
+    <article class="card">
+      <h3>《路易·波拿巴的雾月十八日》</h3>
+      <p><strong>作者：</strong>卡尔·马克思</p>
+      <p><strong>年份：</strong>1852</p>
+      <p>研究1848年革命、阶级基础、政治代表与拿破仑三世的上台。</p>
+    </article>
+    <article class="card">
+      <h3>《资本论》第一卷</h3>
+      <p><strong>作者：</strong>卡尔·马克思</p>
+      <p><strong>年份：</strong>1867</p>
+      <p>讨论商品、劳动、剩余价值、积累、劳动过程和商品拜物教。</p>
+    </article>
+    <article class="card">
+      <h3>《哥达纲领批判》</h3>
+      <p><strong>作者：</strong>卡尔·马克思</p>
+      <p><strong>年份：</strong>1875</p>
+      <p>批评德国社会民主党的纲领，并讨论社会所有制与按劳分配。</p>
+    </article>
+    <article class="card">
+      <h3>《国家与革命》</h3>
+      <p><strong>作者：</strong>弗拉基米尔·列宁</p>
+      <p><strong>年份：</strong>1917</p>
+      <p>讨论国家、阶级、无产阶级专政、向共产主义过渡及国家消亡。</p>
+    </article>
+    <article class="card">
+      <h3>《帝国主义是资本主义的最高阶段》</h3>
+      <p><strong>作者：</strong>弗拉基米尔·列宁</p>
+      <p><strong>年份：</strong>1916</p>
+      <p>分析垄断、金融资本、利润输出和帝国主义体系。</p>
+    </article>
+    <article class="card">
+      <h3>《论新经济政策》及相关论文</h3>
+      <p><strong>作者：</strong>列宁、布哈林及其同时代人</p>
+      <p><strong>年份：</strong>1921年前后</p>
+      <p>讨论战后经济衰退、市场、国家、粮食与俄国社会变革。</p>
+    </article>
+    <article class="card">
+      <h3>《新阶级》</h3>
+      <p><strong>作者：</strong>米洛万·吉拉斯</p>
+      <p><strong>年份：</strong>1957</p>
+      <p>批判社会主义国家中的官僚统治，并提出新统治阶级概念。</p>
+    </article>
+    <article class="card">
+      <h3>《资本主义的生产方式》与女权主义批判</h3>
+      <p><strong>作者：</strong>多位马克思主义、社会主义女权主义者</p>
+      <p>讨论家庭劳动、照护、再生产、性别分工与阶级关系。</p>
+    </article>
+    <article class="card">
+      <h3>《现代性的铁笼》与生态马克思主义文献</h3>
+      <p><strong>作者：</strong>多位现代批评者</p>
+      <p>连接资本积累、生态危机、城市化、气候变化与社会再生产。</p>
+    </article>
+  </div>
+  <h2 style="margin-top:36px">阅读提示</h2>
+  <div class="quote">
+    阅读经典时应同时关注：作者讨论的具体问题、当时的历史语境、
+    文本的内部逻辑、后来文本的使用方式，以及支持者和批评者的不同解释。
+    引用时应保留原文、译本、年份、章节和上下文。
+  </div>
+</section>
+<section id="timeline">
+  <h2>简史时间线</h2>
+  <div class="timeline">
+    <article class="event">
+      <strong>1848 — 《共产党宣言》发表</strong>
+      <div class="event-detail">马克思和恩格斯在欧洲革命浪潮中分析阶级斗争、资产阶级与共产主义运动。</div>
+    </article>
+    <article class="event">
+      <strong>1864 — 第一国际成立</strong>
+      <div class="event-detail">国际工人协会把工会、社会主义者和工人组织连接到跨国网络中。</div>
+    </article>
+    <article class="event">
+      <strong>1867 — 《资本论》第一卷出版</strong>
+      <div class="event-detail">马克思系统讨论商品、劳动、剩余价值、积累与商品拜物教。</div>
+    </article>
+    <article class="event">
+      <strong>1871 — 巴黎公社</strong>
+      <div class="event-detail">公社成为马克思主义关于工人政权、代表制度和国家机器的讨论案例。</div>
+    </article>
+    <article class="event">
+      <strong>1889 — 第二国际成立</strong>
+      <div class="event-detail">社会民主党和工人组织进入议会、工会、文化教育及国际纪念活动。</div>
+    </article>
+    <article class="event">
+      <strong>1917 — 俄国革命</strong>
+      <div class="event-detail">俄国帝国瓦解后，布尔什维克建立苏维埃政权，开启二十世纪社会主义国家实践。</div>
+    </article>
+    <article class="event">
+      <strong>1919—1949 — 各地共产主义运动</strong>
+      <div class="event-detail">共产主义和左翼运动在欧洲、亚洲、拉丁美洲和殖民地体系中以不同形式发展。</div>
+    </article>
+    <article class="event">
+      <strong>1949—1991 — 冷战时期</strong>
+      <div class="event-detail">社会主义阵营、资本主义阵营、去殖民化运动和军事对抗共同塑造世界格局。</div>
+    </article>
+    <article class="event">
+      <strong>1956—1968 — 去斯大林化与全球1968运动</strong>
+      <div class="event-detail">波兰、匈牙利、捷克斯洛伐克、法国、美国和拉美等地出现制度、文化与社会运动争论。</div>
+    </article>
+    <article class="event">
+      <strong>1989—1991 — 东欧剧变与苏联解体</strong>
+      <div class="event-detail">国家制度、市场改革、民族冲突、民主化和经济危机重塑原社会主义地区。</div>
+    </article>
+    <article class="event">
+      <strong>当代 — 多元左翼与批评传统</strong>
+      <div class="event-detail">生态马克思主义、女权马克思主义、自治主义、社会民主主义和后殖民批判继续讨论阶级、性别、种族和生态问题。</div>
+    </article>
+  </div>
+</section>
+<section id="people">
+  <h2>重要人物</h2>
+  <div class="filter-row">
+    <button class="person-filter active" data-filter="all">全部</button>
+    <button class="person-filter" data-filter="theory">理论家</button>
+    <button class="person-filter" data-filter="movement">运动与组织</button>
+    <button class="person-filter" data-filter="criticism">批评者与异议者</button>
+  </div>
+  <div class="people-list" id="peopleList">
+    <article class="person" data-type="theory" data-id="marx">
+      <span class="bookmark">☆</span>
+      <strong>卡尔·马克思（1818—1883）</strong>
+      <p>政治经济学批判、历史唯物主义、阶级斗争与资本主义分析。</p>
+    </article>
+    <article class="person" data-type="theory" data-id="engels">
+      <span class="bookmark">☆</span>
+      <strong>弗里德里希·恩格斯（1820—1895）</strong>
+      <p>与马克思合作，研究政治经济学、工人阶级、家庭与国家理论。</p>
+    </article>
+    <article class="person" data-type="theory movement" data-id="lenin">
+      <span class="bookmark">☆</span>
+      <strong>弗拉基米尔·列宁（1870—1924）</strong>
+      <p>俄国革命、列宁主义政党理论、帝国主义分析与国家理论。</p>
+    </article>
+    <article class="person" data-type="theory" data-id="luxemburg">
+      <span class="bookmark">☆</span>
+      <strong>罗莎·卢森堡（1871—1919）</strong>
+      <p>关于资本主义积累、大众罢工、帝国主义、民主与革命的理论争论。</p>
+    </article>
+    <article class="person" data-type="theory" data-id="gramsci">
+      <span class="bookmark">☆</span>
+      <strong>安东尼奥·葛兰西（1891—1937）</strong>
+      <p>领导权、知识分子、国家、霸权与文化斗争。</p>
+    </article>
+    <article class="person" data-type="theory movement" data-id="mao">
+      <span class="bookmark">☆</span>
+      <strong>毛泽东（1893—1976）</strong>
+      <p>中国革命、民族问题、农村包围城市、阶级斗争与中国社会主义实践。</p>
+    </article>
+    <article class="person" data-type="criticism" data-id="djilas">
+      <span class="bookmark">☆</span>
+      <strong>米洛万·吉拉斯（1911—1995）</strong>
+      <p>南斯拉夫异议者，以“新阶级”概念批判官僚权力与国家所有制。</p>
+    </article>
+    <article class="person" data-type="criticism" data-id="kollontai">
+      <span class="bookmark">☆</span>
+      <strong>亚历山德拉·柯伦泰（1872—1952）</strong>
+      <p>自由、婚姻、性别、家庭和社会再生产问题的马克思主义女权主义者。</p>
+    </article>
+    <article class="person" data-type="theory criticism" data-id="marcuse">
+      <span class="bookmark">☆</span>
+      <strong>赫伯特·马尔库塞（1898—1979）</strong>
+      <p>法兰克福学派代表，批评消费社会、技术理性与压抑性社会需求。</p>
+    </article>
+    <article class="person" data-type="theory criticism" data-id="harvey">
+      <span class="bookmark">☆</span>
+      <strong>大卫·哈维（1935—）</strong>
+      <p>地理学与马克思主义，研究城市化、资本积累和《资本论》。</p>
+    </article>
+  </div>
+</section>
+<section id="terms">
+  <h2>概念卡片</h2>
+  <div>
+    <span class="term active" data-key="class">阶级</span>
+    <span class="term" data-key="surplus">剩余价值</span>
+    <span class="term" data-key="means">生产资料</span>
+    <span class="term" data-key="dictatorship">无产阶级专政</span>
+    <span class="term" data-key="fetish">商品拜物教</span>
+    <span class="term" data-key="alienation">异化</span>
+    <span class="term" data-key="base">经济基础与上层建筑</span>
+    <span class="term" data-key="hegemony">领导权与霸权</span>
+    <span class="term" data-key="reproduction">社会再生产</span>
+    <span class="term" data-key="plan">计划与市场</span>
+    <span class="term" data-key="mode">生产方式</span>
+    <span class="term" data-key="revolution">革命</span>
+  </div>
+  <div id="termExplain"></div>
+</section>
+<section id="compare">
+  <h2>观点比较工具</h2>
+  <label for="topic">选择主题：</label>
+  <select id="topic">
+    <option value="state">国家与革命</option>
+    <option value="market">市场与计划</option>
+    <option value="democracy">民主形式</option>
+    <option value="change">社会变革方式</option>
+    <option value="property">所有制与财产</option>
+    <option value="class">阶级与身份政治</option>
+  </select>
+  <div style="margin:10px 0;">
+    <button id="exportCompareBtn">📄 导出对比文本</button>
+  </div>
+  <div class="grid" style="margin-top:18px">
+    <article class="card">
+      <h3>马克思主义传统</h3>
+      <p id="leftText"></p>
+    </article>
+    <article class="card">
+      <h3>批评或替代传统</h3>
+      <p id="rightText"></p>
+    </article>
+  </div>
+</section>
+<section id="sources">
+  <h2>外部来源与核查建议</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>数字文献库</h3>
+      <p><a href="https://www.marxists.org/" target="_blank" rel="noopener noreferrer">Marxists Internet Archive</a></p>
+      <p><a href="https://archive.org/" target="_blank" rel="noopener noreferrer">Internet Archive</a></p>
+      <p><a href="https://gallica.bnf.fr/" target="_blank" rel="noopener noreferrer">Gallica 法国国家图书馆</a></p>
+    </article>
+    <article class="card">
+      <h3>学术数据库</h3>
+      <p><a href="https://www.jstor.org/" target="_blank" rel="noopener noreferrer">JSTOR</a></p>
+      <p><a href="https://www.cambridge.org/core" target="_blank" rel="noopener noreferrer">Cambridge Core</a></p>
+      <p><a href="https://scholar.google.com/" target="_blank" rel="noopener noreferrer">Google Scholar</a></p>
+    </article>
+    <article class="card">
+      <h3>档案与历史资料</h3>
+      <p><a href="https://www.ohchr.org/" target="_blank" rel="noopener noreferrer">联合国人权资料</a></p>
+      <p><a href="https://www.wilsoncenter.org/program/cold-war-international-history-project" target="_blank" rel="noopener noreferrer">冷战国际史项目档案</a></p>
+    </article>
+    <article class="card">
+      <h3>批判性阅读清单</h3>
+      <ul>
+        <li>确认原文、译本与出版年份。</li>
+        <li>区分理论文本、党派纲领和国家政策。</li>
+        <li>同时阅读支持者、批评者与当事地区史料。</li>
+        <li>区分作者观点、组织实践和后来制度结果。</li>
+        <li>检查统计数字、档案来源和方法是否可复核。</li>
+      </ul>
+    </article>
+  </div>
+  <p class="source-note">
+    本页面用于教育与研究，不代表对任何思想或历史事件的单一结论。
+    外部站点的准确性、翻译质量和立场应由读者进一步核查。
+  </p>
+</section>
+</main>
+<footer>
+共产主义思想史与批判性阅读 — 多来源、多立场、多重语境
+</footer>
+<button id="backTop">↑</button>
+<div id="helpModal">
+  <div class="modal-box">
+    <h3>⌨️ 快捷键列表</h3>
+    <ul style="padding-left:20px;">
+      <li>1 ~ 6：快速切换标签页</li>
+      <li>S：聚焦搜索框</li>
+      <li>Esc：关闭帮助弹窗</li>
+    </ul>
+    <button id="closeHelp" style="margin-top:12px;">关闭</button>
+  </div>
+</div>
 
-  <nav aria-label="章节导航">
-    <button class="active" data-tab="works">经典名作</button>
-    <button data-tab="timeline">时间线</button>
-    <button data-tab="people">重要人物</button>
-    <button data-tab="terms">概念卡片</button>
-    <button data-tab="compare">观点比较</button>
-    <button data-tab="sources">来源与参考</button>
-  </nav>
+<script>
+// ========== 原有基础数据 ==========
+const tabButtons = document.querySelectorAll("[data-tab]");
+const sections = document.querySelectorAll("main section");
+const terms = {
+  class: "阶级通常指人们在生产关系中所处的不同位置及其与生产资料的关系。具体划分和阶级形成方式在各理论传统中存在争议。",
+  surplus: "剩余价值理论认为，工人创造的价值中扣除必要劳动补偿后的部分被资本所有者占有。批评者质疑其劳动价值理论、度量方式和经济解释。",
+  means: "生产资料包括土地、机器、原材料等用于生产的条件。私人、国家、合作社或公社所有制是主要制度争论之一。",
+  dictatorship: "列宁主义传统中指无产阶级对其他阶级的政治支配；马克思也曾区分国家的阶级性质与过渡阶段。现代批评集中于人权、政党垄断和宪政监督。",
+  fetish: "商品拜物教指社会关系在商品交换中表现为物品自身的性质，而不是生产者之间的关系。该概念也被用于讨论数字平台、金融和消费文化。",
+  alienation: "异化指劳动者与劳动产品、劳动过程、自身潜能及他人的疏离。不同作者将异化限定在经济关系、心理结构或制度权力中。",
+  base: "该框架强调经济关系与政治文化、法律制度之间的相互塑造，但并非所有马克思主义者都支持简单的经济决定论。",
+  hegemony: "葛兰西用领导权分析统治阶级如何通过文化、教育、媒体和共识获得社会认同，而不只依靠国家强制。",
+  reproduction: "社会再生产包括劳动力、家庭、教育、照护和公共服务的维持过程。社会主义女权主义常强调家庭劳动和无偿劳动。",
+  plan: "计划经济通过公共机构协调生产和分配；市场社会主义、混合经济和去中心化计划是不同的折中方案。",
+  mode: "生产方式指特定历史时期中生产力、劳动组织和生产关系的组合，例如封建、资本主义或社会主义形态。",
+  revolution: "革命指根本制度或权力结构的变迁。理论上存在议会改革、阶级革命、社会运动、反殖民斗争等不同模式与争议。"
+};
+const positions = {
+  state: { left: "部分马克思主义传统认为国家根植于阶级统治，革命后可能出现过渡性的无产阶级国家，并最终走向国家消亡。", right: "自由主义强调宪政、分权、可撤换政府和公民权利；无政府主义、社会民主主义和自治社会主义也提出了不同答案。" },
+  market: { left: "部分传统主张公共计划、社会所有制、按需分配或工人委员会；另一些传统支持市场社会主义和合作社。", right: "批评者认为中央计划容易产生信息、激励和权力集中问题；市场支持者强调价格机制，也承认市场失灵需要公共干预。" },
+  democracy: { left: "部分传统区分形式民主与实质民主，强调经济民主、基层代表、罢工权、工人委员会和社会公有制。", right: "自由民主强调普选、司法独立、言论自由、反对党和权力制衡；批评者也指出资本不平等会削弱形式上的政治平等。" },
+  change: { left: "传统内部存在革命政党、大众罢工、议会斗争、工人组织、民族解放和基层运动等多种路径。", right: "社会民主主义、自由主义和非暴力运动强调立法、公共福利、制度协商、媒体监督和渐进改革。" },
+  property: { left: "社会所有制、合作社所有制和公共企业旨在降低私人资本对生产和资源分配的支配。", right: "批评者关注官僭垄断、管理效率、个人权利和创新激励；支持者区分个人财产、生产资料和公共资源。" },
+  class: { left: "阶级分析强调生产关系、劳动、剥削、收入分配和社会权力，并把性别、种族与殖民联系纳入再生产结构。", right: "批评者要求重视身份、文化、宗教、民族和个体经验，质疑阶级是否足以解释复杂的社会支配关系。" }
+};
+const quotes = [
+  "哲学家们只是用不同的方式解释世界，而问题在于改变世界。",
+  "全世界无产者，联合起来！",
+  "理论一经掌握群众，也会变成物质力量。",
+  "劳动创造了人本身。",
+  "历史活动是群众的活动。"
+];
 
-  <main>
-    <section id="works" class="active">
-      <h2>经典名作</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>《共产党宣言》</h3>
-          <p><strong>作者：</strong>马克思、恩格斯</p>
-          <p><strong>年份：</strong>1848</p>
-          <p>分析阶级斗争、资本主义社会、资产阶级与共产主义纲领。</p>
-        </article>
+// ========== 1. Tab切换 ==========
+tabButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    tabButtons.forEach(item => item.classList.remove("active"));
+    sections.forEach(section => section.classList.remove("active"));
+    button.classList.add("active");
+    document.getElementById(button.dataset.tab).classList.add("active");
+  });
+});
+document.querySelectorAll(".event").forEach(event => {
+  event.addEventListener("click", () => event.classList.toggle("open"));
+});
 
-        <article class="card">
-          <h3>《路易·波拿巴的雾月十八日》</h3>
-          <p><strong>作者：</strong>卡尔·马克思</p>
-          <p><strong>年份：</strong>1852</p>
-          <p>研究1848年革命、阶级基础、政治代表与拿破仑三世的上台。</p>
-        </article>
+// ========== 2. 概念卡片 + 打字机 ==========
+const termExplain = document.getElementById("termExplain");
+let typeTimer = null;
+function typeText(text){
+  clearInterval(typeTimer);
+  termExplain.textContent = "";
+  let i=0;
+  typeTimer = setInterval(()=>{
+    if(i>=text.length){ clearInterval(typeTimer); return; }
+    termExplain.textContent += text[i++];
+  },18);
+}
+document.querySelectorAll(".term").forEach(term => {
+  term.addEventListener("click", () => {
+    document.querySelectorAll(".term").forEach(item => item.classList.remove("active"));
+    term.classList.add("active");
+    typeText(terms[term.dataset.key]);
+  });
+});
+typeText(terms.class);
 
-        <article class="card">
-          <h3>《资本论》第一卷</h3>
-          <p><strong>作者：</strong>卡尔·马克思</p>
-          <p><strong>年份：</strong>1867</p>
-          <p>讨论商品、劳动、剩余价值、积累、劳动过程和商品拜物教。</p>
-        </article>
-
-        <article class="card">
-          <h3>《哥达纲领批判》</h3>
-          <p><strong>作者：</strong>卡尔·马克思</p>
-          <p><strong>年份：</strong>1875</p>
-          <p>批评德国社会民主党的纲领，并讨论社会所有制与按劳分配。</p>
-        </article>
-
-        <article class="card">
-          <h3>《国家与革命》</h3>
-          <p><strong>作者：</strong>弗拉基米尔·列宁</p>
-          <p><strong>年份：</strong>1917</p>
-          <p>讨论国家、阶级、无产阶级专政、向共产主义过渡及国家消亡。</p>
-        </article>
-
-        <article class="card">
-          <h3>《帝国主义是资本主义的最高阶段》</h3>
-          <p><strong>作者：</strong>弗拉基米尔·列宁</p>
-          <p><strong>年份：</strong>1916</p>
-          <p>分析垄断、金融资本、利润输出和帝国主义体系。</p>
-        </article>
-
-        <article class="card">
-          <h3>《论新经济政策》及相关论文</h3>
-          <p><strong>作者：</strong>列宁、布哈林及其同时代人</p>
-          <p><strong>年份：</strong>1921年前后</p>
-          <p>讨论战后经济衰退、市场、国家、粮食与俄国社会变革。</p>
-        </article>
-
-        <article class="card">
-          <h3>《新阶级》</h3>
-          <p><strong>作者：</strong>米洛万·吉拉斯</p>
-          <p><strong>年份：</strong>1957</p>
-          <p>批判社会主义国家中的官僚统治，并提出新统治阶级概念。</p>
-        </article>
-
-        <article class="card">
-          <h3>《资本主义的生产方式》与女权主义批判</h3>
-          <p><strong>作者：</strong>多位马克思主义、社会主义女权主义者</p>
-          <p>讨论家庭劳动、照护、再生产、性别分工与阶级关系。</p>
-        </article>
-
-        <article class="card">
-          <h3>《现代性的铁笼》与生态马克思主义文献</h3>
-          <p><strong>作者：</strong>多位现代批评者</p>
-          <p>连接资本积累、生态危机、城市化、气候变化与社会再生产。</p>
-        </article>
-      </div>
-
-      <h2 style="margin-top:36px">阅读提示</h2>
-      <div class="quote">
-        阅读经典时应同时关注：作者讨论的具体问题、当时的历史语境、
-        文本的内部逻辑、后来文本的使用方式，以及支持者和批评者的不同解释。
-        引用时应保留原文、译本、年份、章节和上下文。
-      </div>
-    </section>
-
-    <section id="timeline">
-      <h2>简史时间线</h2>
-      <div class="timeline">
-        <article class="event">
-          <strong>1848 — 《共产党宣言》发表</strong>
-          <div class="event-detail">马克思和恩格斯在欧洲革命浪潮中分析阶级斗争、资产阶级与共产主义运动。</div>
-        </article>
-
-        <article class="event">
-          <strong>1864 — 第一国际成立</strong>
-          <div class="event-detail">国际工人协会把工会、社会主义者和工人组织连接到跨国网络中。</div>
-        </article>
-
-        <article class="event">
-          <strong>1867 — 《资本论》第一卷出版</strong>
-          <div class="event-detail">马克思系统讨论商品、劳动、剩余价值、积累与商品拜物教。</div>
-        </article>
-
-        <article class="event">
-          <strong>1871 — 巴黎公社</strong>
-          <div class="event-detail">公社成为马克思主义关于工人政权、代表制度和国家机器的讨论案例。</div>
-        </article>
-
-        <article class="event">
-          <strong>1889 — 第二国际成立</strong>
-          <div class="event-detail">社会民主党和工人组织进入议会、工会、文化教育及国际纪念活动。</div>
-        </article>
-
-        <article class="event">
-          <strong>1917 — 俄国革命</strong>
-          <div class="event-detail">俄国帝国瓦解后，布尔什维克建立苏维埃政权，开启二十世纪社会主义国家实践。</div>
-        </article>
-
-        <article class="event">
-          <strong>1919—1949 — 各地共产主义运动</strong>
-          <div class="event-detail">共产主义和左翼运动在欧洲、亚洲、拉丁美洲和殖民地体系中以不同形式发展。</div>
-        </article>
-
-        <article class="event">
-          <strong>1949—1991 — 冷战时期</strong>
-          <div class="event-detail">社会主义阵营、资本主义阵营、去殖民化运动和军事对抗共同塑造世界格局。</div>
-        </article>
-
-        <article class="event">
-          <strong>1956—1968 — 去斯大林化与全球1968运动</strong>
-          <div class="event-detail">波兰、匈牙利、捷克斯洛伐克、法国、美国和拉美等地出现制度、文化与社会运动争论。</div>
-        </article>
-
-        <article class="event">
-          <strong>1989—1991 — 东欧剧变与苏联解体</strong>
-          <div class="event-detail">国家制度、市场改革、民族冲突、民主化和经济危机重塑原社会主义地区。</div>
-        </article>
-
-        <article class="event">
-          <strong>当代 — 多元左翼与批评传统</strong>
-          <div class="event-detail">生态马克思主义、女权马克思主义、自治主义、社会民主主义和后殖民批判继续讨论阶级、性别、种族和生态问题。</div>
-        </article>
-      </div>
-    </section>
-
-    <section id="people">
-      <h2>重要人物</h2>
-      <div class="filter-row">
-        <button class="person-filter active" data-filter="all">全部</button>
-        <button class="person-filter" data-filter="theory">理论家</button>
-        <button class="person-filter" data-filter="movement">运动与组织</button>
-        <button class="person-filter" data-filter="criticism">批评者与异议者</button>
-      </div>
-
-      <div class="people-list" id="peopleList">
-        <article class="person" data-type="theory">
-          <strong>卡尔·马克思（1818—1883）</strong>
-          <p>政治经济学批判、历史唯物主义、阶级斗争与资本主义分析。</p>
-        </article>
-
-        <article class="person" data-type="theory">
-          <strong>弗里德里希·恩格斯（1820—1895）</strong>
-          <p>与马克思合作，研究政治经济学、工人阶级、家庭与国家理论。</p>
-        </article>
-
-        <article class="person" data-type="theory movement">
-          <strong>弗拉基米尔·列宁（1870—1924）</strong>
-          <p>俄国革命、列宁主义政党理论、帝国主义分析与国家理论。</p>
-        </article>
-
-        <article class="person" data-type="theory">
-          <strong>罗莎·卢森堡（1871—1919）</strong>
-          <p>关于资本主义积累、大众罢工、帝国主义、民主与革命的理论争论。</p>
-        </article>
-
-        <article class="person" data-type="theory">
-          <strong>安东尼奥·葛兰西（1891—1937）</strong>
-          <p>领导权、知识分子、国家、霸权与文化斗争。</p>
-        </article>
-
-        <article class="person" data-type="theory movement">
-          <strong>毛泽东（1893—1976）</strong>
-          <p>中国革命、民族问题、农村包围城市、阶级斗争与中国社会主义实践。</p>
-        </article>
-
-        <article class="person" data-type="criticism">
-          <strong>米洛万·吉拉斯（1911—1995）</strong>
-          <p>南斯拉夫异议者，以“新阶级”概念批判官僚权力与国家所有制。</p>
-        </article>
-
-        <article class="person" data-type="criticism">
-          <strong>亚历山德拉·柯伦泰（1872—1952）</strong>
-          <p>自由、婚姻、性别、家庭和社会再生产问题的马克思主义女权主义者。</p>
-        </article>
-
-        <article class="person" data-type="theory criticism">
-          <strong>赫伯特·马尔库塞（1898—1979）</strong>
-          <p>法兰克福学派代表，批评消费社会、技术理性与压抑性社会需求。</p>
-        </article>
-
-        <article class="person" data-type="theory criticism">
-          <strong>大卫·哈维（1935—）</strong>
-          <p>地理学与马克思主义，研究城市化、资本积累和《资本论》。</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="terms">
-      <h2>概念卡片</h2>
-      <div>
-        <span class="term active" data-key="class">阶级</span>
-        <span class="term" data-key="surplus">剩余价值</span>
-        <span class="term" data-key="means">生产资料</span>
-        <span class="term" data-key="dictatorship">无产阶级专政</span>
-        <span class="term" data-key="fetish">商品拜物教</span>
-        <span class="term" data-key="alienation">异化</span>
-        <span class="term" data-key="base">经济基础与上层建筑</span>
-        <span class="term" data-key="hegemony">领导权与霸权</span>
-        <span class="term" data-key="reproduction">社会再生产</span>
-        <span class="term" data-key="plan">计划与市场</span>
-        <span class="term" data-key="mode">生产方式</span>
-        <span class="term" data-key="revolution">革命</span>
-      </div>
-
-      <div id="termExplain">
-        阶级通常指人们在生产关系中所处的不同位置及其与生产资料的关系。具体划分和阶级形成方式在各理论传统中存在争议。
-      </div>
-    </section>
-
-    <section id="compare">
-      <h2>观点比较工具</h2>
-      <label for="topic">选择主题：</label>
-      <select id="topic">
-        <option value="state">国家与革命</option>
-        <option value="market">市场与计划</option>
-        <option value="democracy">民主形式</option>
-        <option value="change">社会变革方式</option>
-        <option value="property">所有制与财产</option>
-        <option value="class">阶级与身份政治</option>
-      </select>
-
-      <div class="grid" style="margin-top:18px">
-        <article class="card">
-          <h3>马克思主义传统</h3>
-          <p id="leftText"></p>
-        </article>
-        <article class="card">
-          <h3>批评或替代传统</h3>
-          <p id="rightText"></p>
-        </article>
-      </div>
-    </section>
-
-    <section id="sources">
-      <h2>外部来源与核查建议</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>数字文献库</h3>
-          <p><a href="https://www.marxists.org/" target="_blank" rel="noopener noreferrer">Marxists Internet Archive</a></p>
-          <p><a href="https://archive.org/" target="_blank" rel="noopener noreferrer">Internet Archive</a></p>
-          <p><a href="https://gallica.bnf.fr/" target="_blank" rel="noopener noreferrer">Gallica 法国国家图书馆</a></p>
-        </article>
-
-        <article class="card">
-          <h3>学术数据库</h3>
-          <p><a href="https://www.jstor.org/" target="_blank" rel="noopener noreferrer">JSTOR</a></p>
-          <p><a href="https://www.cambridge.org/core" target="_blank" rel="noopener noreferrer">Cambridge Core</a></p>
-          <p><a href="https://scholar.google.com/" target="_blank" rel="noopener noreferrer">Google Scholar</a></p>
-        </article>
-
-        <article class="card">
-          <h3>档案与历史资料</h3>
-          <p><a href="https://www.ohchr.org/" target="_blank" rel="noopener noreferrer">联合国人权资料</a></p>
-          <p><a href="https://www.wilsoncenter.org/program/cold-war-international-history-project" target="_blank" rel="noopener noreferrer">冷战国际史项目档案</a></p>
-        </article>
-
-        <article class="card">
-          <h3>批判性阅读清单</h3>
-          <ul>
-            <li>确认原文、译本与出版年份。</li>
-            <li>区分理论文本、党派纲领和国家政策。</li>
-            <li>同时阅读支持者、批评者与当事地区史料。</li>
-            <li>区分作者观点、组织实践和后来制度结果。</li>
-            <li>检查统计数字、档案来源和方法是否可复核。</li>
-          </ul>
-        </article>
-      </div>
-
-      <p class="source-note">
-        本页面用于教育与研究，不代表对任何思想或历史事件的单一结论。
-        外部站点的准确性、翻译质量和立场应由读者进一步核查。
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    共产主义思想史与批判性阅读 — 多来源、多立场、多重语境
-  </footer>
-
-  <script>
-    const tabButtons = document.querySelectorAll("[data-tab]");
-    const sections = document.querySelectorAll("main section");
-
-    tabButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        tabButtons.forEach(item => item.classList.remove("active"));
-        sections.forEach(section => section.classList.remove("active"));
-        button.classList.add("active");
-        document.getElementById(button.dataset.tab).classList.add("active");
-      });
+// ========== 3. 人物筛选 ==========
+document.querySelectorAll(".person-filter").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".person-filter").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    const filter = button.dataset.filter;
+    document.querySelectorAll(".person").forEach(person => {
+      person.style.display = filter === "all" || person.dataset.type.includes(filter) ? "block" : "none";
     });
+  });
+});
 
-    document.querySelectorAll(".event").forEach(event => {
-      event.addEventListener("click", () => event.classList.toggle("open"));
-    });
+// ========== 4. 观点对比 ==========
+const topic = document.getElementById("topic");
+const leftText = document.getElementById("leftText");
+const rightText = document.getElementById("rightText");
+function updateCompare() {
+  leftText.textContent = positions[topic.value].left;
+  rightText.textContent = positions[topic.value].right;
+}
+topic.addEventListener("change", updateCompare);
+updateCompare();
+document.getElementById("exportCompareBtn").onclick = ()=>{
+  const t = topic.options[topic.selectedIndex].text;
+  const txt = `【${t}】\n马克思主义传统：\n${leftText.textContent}\n\n批评或替代传统：\n${rightText.textContent}`;
+  navigator.clipboard.writeText(txt).then(()=>alert("对比文本已复制！"));
+};
 
-    const terms = {
-      class: "阶级通常指人们在生产关系中所处的不同位置及其与生产资料的关系。具体划分和阶级形成方式在各理论传统中存在争议。",
-      surplus: "剩余价值理论认为，工人创造的价值中扣除必要劳动补偿后的部分被资本所有者占有。批评者质疑其劳动价值理论、度量方式和经济解释。",
-      means: "生产资料包括土地、机器、原材料等用于生产的条件。私人、国家、合作社或公社所有制是主要制度争论之一。",
-      dictatorship: "列宁主义传统中指无产阶级对其他阶级的政治支配；马克思也曾区分国家的阶级性质与过渡阶段。现代批评集中于人权、政党垄断和宪政监督。",
-      fetish: "商品拜物教指社会关系在商品交换中表现为物品自身的性质，而不是生产者之间的关系。该概念也被用于讨论数字平台、金融和消费文化。",
-      alienation: "异化指劳动者与劳动产品、劳动过程、自身潜能及他人的疏离。不同作者将异化限定在经济关系、心理结构或制度权力中。",
-      base: "该框架强调经济关系与政治文化、法律制度之间的相互塑造，但并非所有马克思主义者都支持简单的经济决定论。",
-      hegemony: "葛兰西用领导权分析统治阶级如何通过文化、教育、媒体和共识获得社会认同，而不只依靠国家强制。",
-      reproduction: "社会再生产包括劳动力、家庭、教育、照护和公共服务的维持过程。社会主义女权主义常强调家庭劳动和无偿劳动。",
-      plan: "计划经济通过公共机构协调生产和分配；市场社会主义、混合经济和去中心化计划是不同的折中方案。",
-      mode: "生产方式指特定历史时期中生产力、劳动组织和生产关系的组合，例如封建、资本主义或社会主义形态。",
-      revolution: "革命指根本制度或权力结构的变迁。理论上存在议会改革、阶级革命、社会运动、反殖民斗争等不同模式与争议。"
-    };
+// ========== 5. 滚动进度条 ==========
+const progressBar = document.getElementById("progressBar");
+window.addEventListener("scroll", ()=>{
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (window.scrollY / h)*100;
+  progressBar.style.width = pct+"%";
+});
 
-    document.querySelectorAll(".term").forEach(term => {
-      term.addEventListener("click", () => {
-        document.querySelectorAll(".term").forEach(item => item.classList.remove("active"));
-        term.classList.add("active");
-        document.getElementById("termExplain").textContent = terms[term.dataset.key];
-      });
-    });
+// ========== 6. 返回顶部 ==========
+const backTop = document.getElementById("backTop");
+window.addEventListener("scroll", ()=>{
+  backTop.classList.toggle("show", window.scrollY>300);
+});
+backTop.onclick = ()=> window.scrollTo({top:0, behavior:"smooth"});
 
-    document.querySelectorAll(".person-filter").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".person-filter").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
+// ========== 7. 名言轮播 ==========
+const quoteRotator = document.getElementById("quoteRotator");
+let qIdx=0;
+function rotateQuote(){
+  quoteRotator.style.opacity=0;
+  setTimeout(()=>{
+    quoteRotator.textContent = quotes[qIdx];
+    quoteRotator.style.opacity=1;
+    qIdx = (qIdx+1)%quotes.length;
+  },400);
+}
+rotateQuote();
+setInterval(rotateQuote, 5500);
 
-        const filter = button.dataset.filter;
-        document.querySelectorAll(".person").forEach(person => {
-          person.style.display =
-            filter === "all" || person.dataset.type.includes(filter)
-              ? "block"
-              : "none";
-        });
-      });
-    });
+// ========== 8. 卡片波纹 ==========
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("click", e=>{
+    const r = document.createElement("span");
+    r.className="ripple";
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    r.style.left = x+"px";
+    r.style.top = y+"px";
+    card.appendChild(r);
+    setTimeout(()=>r.remove(),600);
+  });
+});
 
-    const positions = {
-      state: {
-        left: "部分马克思主义传统认为国家根植于阶级统治，革命后可能出现过渡性的无产阶级国家，并最终走向国家消亡。",
-        right: "自由主义强调宪政、分权、可撤换政府和公民权利；无政府主义、社会民主主义和自治社会主义也提出了不同答案。"
-      },
-      market: {
-        left: "部分传统主张公共计划、社会所有制、按需分配或工人委员会；另一些传统支持市场社会主义和合作社。",
-        right: "批评者认为中央计划容易产生信息、激励和权力集中问题；市场支持者强调价格机制，也承认市场失灵需要公共干预。"
-      },
-      democracy: {
-        left: "部分传统区分形式民主与实质民主，强调经济民主、基层代表、罢工权、工人委员会和社会公有制。",
-        right: "自由民主强调普选、司法独立、言论自由、反对党和权力制衡；批评者也指出资本不平等会削弱形式上的政治平等。"
-      },
-      change: {
-        left: "传统内部存在革命政党、大众罢工、议会斗争、工人组织、民族解放和基层运动等多种路径。",
-        right: "社会民主主义、自由主义和非暴力运动强调立法、公共福利、制度协商、媒体监督和渐进改革。"
-      },
-      property: {
-        left: "社会所有制、合作社所有制和公共企业旨在降低私人资本对生产和资源分配的支配。",
-        right: "批评者关注官僭垄断、管理效率、个人权利和创新激励；支持者区分个人财产、生产资料和公共资源。"
-      },
-      class: {
-        left: "阶级分析强调生产关系、劳动、剥削、收入分配和社会权力，并把性别、种族与殖民联系纳入再生产结构。",
-        right: "批评者要求重视身份、文化、宗教、民族和个体经验，质疑阶级是否足以解释复杂的社会支配关系。"
-      }
-    };
+// ========== 9. 时间线视口渐入 ==========
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting) en.target.classList.add("inview");
+  });
+},{threshold:0.15});
+document.querySelectorAll(".event").forEach(e=>obs.observe(e));
 
-    const topic = document.getElementById("topic");
-    const leftText = document.getElementById("leftText");
-    const rightText = document.getElementById("rightText");
+// ========== 10. 主题切换 ==========
+const themeBtn = document.getElementById("themeBtn");
+if(localStorage.getItem("theme")==="dark") document.body.classList.add("dark");
+themeBtn.onclick = ()=>{
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme", document.body.classList.contains("dark")?"dark":"light");
+};
 
-    function updateCompare() {
-      leftText.textContent = positions[topic.value].left;
-      rightText.textContent = positions[topic.value].right;
+// ========== 11. 收藏（localStorage） ==========
+const saved = JSON.parse(localStorage.getItem("bookmarks")||"[]");
+document.querySelectorAll(".bookmark").forEach(bm=>{
+  const pid = bm.parentElement.dataset.id;
+  if(saved.includes(pid)) bm.classList.add("saved"), bm.textContent="★";
+  bm.onclick = (e)=>{
+    e.stopPropagation();
+    let arr = JSON.parse(localStorage.getItem("bookmarks")||"[]");
+    if(arr.includes(pid)){
+      arr = arr.filter(x=>x!==pid);
+      bm.classList.remove("saved");
+      bm.textContent="☆";
+    }else{
+      arr.push(pid);
+      bm.classList.add("saved");
+      bm.textContent="★";
     }
+    localStorage.setItem("bookmarks", JSON.stringify(arr));
+  };
+});
 
-    topic.addEventListener("change", updateCompare);
-    updateCompare();
-  </script>
+// ========== 12. 访问计数 + 阅读时长估算 ==========
+let visit = Number(localStorage.getItem("visitCount")||0)+1;
+localStorage.setItem("visitCount", visit);
+const wordCount = document.body.innerText.length;
+const readMin = Math.ceil(wordCount / 450);
+document.getElementById("statInfo").textContent = `访问：${visit} 次｜预估阅读：${readMin} 分钟`;
+
+// ========== 13. 粒子背景 ==========
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+class P{
+  constructor(){
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.r = Math.random()*2.2+0.4;
+    this.sx = (Math.random()-0.5)*0.35;
+    this.sy = (Math.random()-0.5)*0.35;
+    this.c = Math.random()>0.5 ? "#ffd43b":"#b51616";
+  }
+  update(){
+    this.x += this.sx;
+    this.y += this.sy;
+    if(this.x<0||this.x>canvas.width) this.sx*=-1;
+    if(this.y<0||this.y>canvas.height) this.sy*=-1;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=this.c;
+    ctx.fill();
+  }
+}
+for(let i=0;i<60;i++) particles.push(new P());
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.update();p.draw();});
+  requestAnimationFrame(loop);
+}
+loop();
+
+// ========== 14. 全文搜索 ==========
+const searchInput = document.getElementById("searchInput");
+const allTextNodes = [];
+function collectNodes(el){
+  if(el.nodeType === 3 && el.textContent.trim()) allTextNodes.push(el);
+  for(const ch of el.childNodes) collectNodes(ch);
+}
+collectNodes(document.querySelector("main"));
+searchInput.oninput = ()=>{
+  const kw = searchInput.value.trim().toLowerCase();
+  allTextNodes.forEach(n=>{
+    const p = n.parentElement;
+    if(p._orig) p.innerHTML = p._orig;
+  });
+  if(!kw) return;
+  allTextNodes.forEach(n=>{
+    const t = n.textContent;
+    const lt = t.toLowerCase();
+    if(lt.includes(kw)){
+      const p = n.parentElement;
+      if(!p._orig) p._orig = p.innerHTML;
+      p.innerHTML = t.replace(new RegExp(`(${kw})`,"gi"),`<mark>$1</mark>`);
+    }
+  });
+};
+
+// ========== 15. 快捷键 ==========
+const helpModal = document.getElementById("helpModal");
+document.getElementById("helpBtn").onclick = ()=> helpModal.classList.add("show");
+document.getElementById("closeHelp").onclick = ()=> helpModal.classList.remove("show");
+document.addEventListener("keydown", e=>{
+  if(e.key.toLowerCase()==="s"){
+    e.preventDefault();
+    searchInput.focus();
+  }
+  if(e.key==="Escape") helpModal.classList.remove("show");
+  const num = Number(e.key);
+  if(num>=1 && num<=6){
+    tabButtons[num-1].click();
+  }
+});
+</script>
 </body>
 </html>
+
